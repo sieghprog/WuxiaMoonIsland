@@ -1,1 +1,54 @@
 {% extends 'base.html' %}
+{% load humanize %}
+
+{% block conteudo %}
+    <header class="py-5 bg-light border-bottom mb-4">
+            <div class="container">
+                <div class="text-center my-5">
+                    <h1 class="fw-bolder">Welcome to the Moon Island!</h1>
+                    <p class="lead mb-0">Local para apresentar os 10~15 populares da semana</p>
+                </div>
+            </div>
+        </header>
+    <!-- Page content-->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8" style="display: flex;flex-wrap: wrap;">
+                    {% for novel in novels %}
+                            <div class="card mb-3 mr-3" style="width: 100%">
+
+                                <div class="card-body">
+
+                                    <a class="card-title h4" href="{% url 'details_view' novel.id %}">{{ novel.novel_title }}</a><hr>
+                                    <table>
+                                        <h6 class="card-text"> Status: {{ novel.novel_status }}</h6>
+                                        <h6 class="card-text"> Autor: {{ novel.novel_author }}</h6>
+                                        <h6 class="card-text"> Capítulos postados: {{ novel.chapters_count }}</h6>
+                                    </table>
+
+                                    <div class="small text-muted mb-2">{{ novel.novel_updated|naturalday|title }}</div>
+                                    <a class="btn btn-primary" href="{% url 'details_view' novel.id %}">Read now →</a>
+                                </div>
+                            </div>
+
+                    {% endfor %}
+                    {% include 'parciais/_pagination.html' %}
+                </div>
+                <!-- Side widgets-->
+            <div class="col-lg-4">
+                <!-- Search widget-->
+                <div class="card mb-4" style="width: 100%">
+                        <div class="card-header">Search</div>
+                        <div class="card-body">
+                            <p>Some of the categories or something</p>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+
+    </div>
+    {% include 'parciais/_footer.html' %}
+
+{% endblock %}
