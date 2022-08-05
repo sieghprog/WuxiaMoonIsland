@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ category_name }}{% endblock %}
+
+{% block conteudo %}
+    {% for novel in novels %}
+    <div class="card-body">
+        <a class="card-title h4" href="{% url 'details_view' novel.id %}">{{ novel.novel_title }}</a><hr>
+            <table>
+                <h6 class="card-text"> Status: {{ novel.novel_status }}</h6>
+                <h6 class="card-text"> Autor: {{ novel.novel_author }}</h6>
+                <h6 class="card-text"> Capítulos postados: {{ novel.chapters_count }}</h6>
+            </table>
+
+        <div class="small text-muted mb-2">{{ novel.novel_updated|naturalday|title }}</div>
+        <a class="btn btn-primary" href="{% url 'details_view' novel.id %}">Read now →</a>
+    </div>
+    {% endfor %}
+{% endblock  %}
