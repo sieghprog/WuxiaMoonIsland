@@ -1,14 +1,18 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
+
+import novels.views
+from chapters.models import Chapter
 from .models import Novel
 from django.db.models import Q, Count, Case, When
 from categories.models import Category
 
+
 class IndexView(ListView):
     model = Novel
     template_name = 'index.html'
-    vs = False
     context_object_name = 'novels'
     paginate_by = 5
 
@@ -23,6 +27,7 @@ class IndexView(ListView):
             )
         )
         return qs
+
 class CategoriesList(ListView):
     model = Category
     template_name = 'categories_list.html'
@@ -34,24 +39,26 @@ class CategoryView(CategoriesList):
     context_object_name = 'novels'
     def get_queryset(self):
         qs = super().get_queryset()
-        print(self.kwargs.get('category_name', None))
         category = (self.kwargs.get('category_name', None))
 
         if not category:
             return qs
 
-
-        qs = Novel.objects.filter(novel_categories__category_name=category, novel_visible=True)
-        qs = qs.annotate(
-            chapters_count=Count(
-                Case(
-                    When(chapter__chapter_visible=True, then=1)
-                )
-            )
+        qs = Novel.objects.filter(novel_categories__category_name=category, novel_visible=True).annotate(
+            chapters_count=Count(Case(When(chapter__chapter_visible=True, then=1)))
         )
-        print(Novel.objects.filter(novel_categories__category_name=category))
+
         return qs
 
-class DetailsView(UpdateView):
+class DetailsView(DetailView):
     model = Novel
-    template_name = 'novel_details.html'
+    template_name = 'novel_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['Chapters'] = Chapter.objects.filter(chapter_novel=self.get_object())
+        context['Genres'] = Category.objects.filter(category_name=self.get_object())
+        return context
+
+
+

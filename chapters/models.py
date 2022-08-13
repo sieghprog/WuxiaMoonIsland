@@ -1,11 +1,13 @@
 from django.db import models
 from novels.models import *
+from django.utils import timezone
 
 class Chapter(models.Model):
     chapter_number = models.IntegerField(verbose_name='Numero')
     chapter_novel = models.ForeignKey(Novel, on_delete=models.CASCADE, verbose_name='Novel')
     chapter_title = models.CharField(max_length=80, verbose_name='Titulo')
     chapter_content = models.TextField()
+    chapter_updated = models.DateTimeField(default=timezone.now)
     chapter_visible = models.BooleanField(default=False)
 
     def __str__(self):
