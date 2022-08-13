@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic.list import ListView
+from django.views.generic import ListView, TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 
@@ -15,6 +15,12 @@ class IndexView(ListView):
     template_name = 'index.html'
     context_object_name = 'novels'
     paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['Category'] = Category.objects.order_by('category_name')
+        print(context)
+        return context
 
     def get_queryset(self):
         qs = super().get_queryset().filter(novel_visible=True)
@@ -57,7 +63,7 @@ class DetailsView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['Chapters'] = Chapter.objects.filter(chapter_novel=self.get_object())
-        context['Genres'] = Category.objects.filter(category_name=self.get_object())
+
         return context
 
 

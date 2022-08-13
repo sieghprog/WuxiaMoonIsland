@@ -3,14 +3,29 @@
 {% block title %}{{ novel.novel_title }}{% endblock %}
 {% block conteudo %}
     <div class="container">
-
+        <h3>{{ novel_title }}{{ novel.novel_title }}</h3><hr>
         <div class="card-body">
-            <h3>{{ novel_title }}{{ novel.novel_title }}</h3><hr>
-            <h6 class="card-text"> Autor: {{ novel.novel_author }}</h6>
-            <h6 class="card-text"> Genero: {{ novel.novel_category }}</h6>
-            <h6 class="card-text"> Last updated: {{ novel.novel_updated }}</h6>
-            <h6 class="card-text"> Status: {{ novel.novel_status }}</h6>
+            <div class="row mr-0">
+                <div class="col-sm-3 mr-0">
+
+                        <img src="{{ novel.novel_img.url}}">
+
+                </div>
+                <div class="col m-0">
+                    <h6 class="card-text"> Autor: {{ novel.novel_author }}</h6>
+                <h6 class="card-text"> Genero:
+                    {% for tags in novel.novel_categories.all %}
+                        <span class="badge badge-secondary">{{ tags }}</span>
+                    {% empty %}
+                        No tags
+                    {% endfor %}</h6>
+                <h6 class="card-text"> Last updated: {{ novel.novel_updated }}</h6>
+                <h6 class="card-text"> Status: {{ novel.novel_status }}</h6>
+                </div>
+
+            </div>
         </div>
+
 
         <div class="table">
             <table class="table">

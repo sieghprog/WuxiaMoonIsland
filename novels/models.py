@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from categories.models import Category
-
+from django_resized import ResizedImageField
 class Novel(models.Model):
     STATUSES = (
         ('Ongoing', 'Ongoing'),
@@ -11,9 +11,10 @@ class Novel(models.Model):
     )
     novel_title = models.CharField(max_length=100, verbose_name='Title')
     novel_author = models.CharField(max_length=80, verbose_name='Author')
-    novel_categories = models.ManyToManyField(Category)
+    novel_categories = models.ManyToManyField(Category, related_name="generos")
     novel_status = models.CharField(max_length=9, choices=STATUSES, blank=True, null=True, verbose_name='Status')
     novel_updated = models.DateTimeField(default=timezone.now, verbose_name='Last Updated')
+    novel_img = ResizedImageField(upload_to='media/%Y/%m/%d', null=True, blank=True)
     novel_visible = models.BooleanField(default=False, verbose_name='Visible')
 
     def __str__(self):
