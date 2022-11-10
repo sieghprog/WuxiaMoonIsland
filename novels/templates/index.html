@@ -37,14 +37,14 @@
                 {% include 'parciais/_pagination.html' %}
             </div>
                 <!-- Side widgets-->
-            <div class="col-lg-4">
+            <div class="col-lg-4" style="display: flex;flex-wrap: wrap;">
                 <!-- Search widget-->
                 <div class="card mb-4" style="width: 100%">
                         <div class="card-header">IDK</div>
                         <div class="card-body">
                             <div class="row" style="display: flex">
                                 {% for categoria in Category %}
-                                    <div class="text-break"><a> A/</a></div>
+                                    <div class="text-break"><a>{{category.category_name}}</a></div>
                                 {% endfor %}
                             </div>
 
