@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load humanize %}
 {% block title %}{{ novel.novel_title }}{% endblock %}
 {% block conteudo %}
     <div class="container">
@@ -31,6 +31,7 @@
             <table class="table">
                 <tr class="tab-pane">
                     <td><h6>Chapter</h6></td>
+                    <td><h6>Title</h6></td>
                     <td><h6>Release date</h6></td>
                 </tr>
 
@@ -38,7 +39,7 @@
                 <tr>
                     <td><a href="#">Chapter {{  chapter.chapter_number }}</a></td>
                     <td>{{ chapter.chapter_title }}</td>
-                    <td>{{ chapter.chapter_updated }}</td>
+                    <td>{{ chapter.chapter_updated|naturalday|title }}</td>
                 </tr>
                 {% endfor %}
 

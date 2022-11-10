@@ -15,37 +15,36 @@
     <!-- Page content-->
 
     <div class="container">
-        <div class="row">
-            <div class="col-sm-8" style="display: flex;flex-wrap: wrap;">
-                    {% for novel in novels %}
-                            <div class="card mb-3 mr-3" style="width: 100%">
+        <div class="row" style="display: flex;flex-wrap: wrap;">
 
-                                <div class="card-body">
+            <div class="col-lg-8" style="display: flex;flex-wrap: wrap;">
+                {% for novel in novels %}
+                    <div class="card flex-row flex-wrap mb-2" style="width: 100%;">
+                        <div class="card-header border-0">
+                            <img src="{{ novel.novel_img.url}}">
+                        </div>
+                        <div class="card-block px-0 py-2">
+                            <a class="card-title h4" href="{% url 'details_view' novel.id %}">{{ novel.novel_title }}</a><hr>
+                            <h6 class="card-text"> Status: {{ novel.novel_status }}</h6>
+                            <h6 class="card-text"> Autor: {{ novel.novel_author }}</h6>
+                            <h6 class="card-text"> Capítulos postados: {{ novel.chapters_count }}</h6>
 
-                                    <a class="card-title h4" href="{% url 'details_view' novel.id %}">{{ novel.novel_title }}</a><hr>
-                                    <table>
-                                        <h6 class="card-text"> Status: {{ novel.novel_status }}</h6>
-                                        <h6 class="card-text"> Autor: {{ novel.novel_author }}</h6>
-                                        <h6 class="card-text"> Capítulos postados: {{ novel.chapters_count }}</h6>
-                                    </table>
-
-                                    <div class="small text-muted mb-2">{{ novel.novel_updated|naturalday|title }}</div>
-                                    <a class="btn btn-primary" href="{% url 'details_view' novel.id %}">Read now →</a>
-                                </div>
-                            </div>
-
-                    {% endfor %}
-                    {% include 'parciais/_pagination.html' %}
-                </div>
+                            <div class="small text-muted mb-2">Ultima atualização: {{ novel.novel_updated|naturalday|title }}</div>
+                            <a class="btn btn-primary" href="{% url 'details_view' novel.id %}">Ver mais →</a>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% include 'parciais/_pagination.html' %}
+            </div>
                 <!-- Side widgets-->
             <div class="col-lg-4">
                 <!-- Search widget-->
                 <div class="card mb-4" style="width: 100%">
-                        <div class="card-header">OX MAIX TOP AIIIW</div>
+                        <div class="card-header">IDK</div>
                         <div class="card-body">
                             <div class="row" style="display: flex">
                                 {% for categoria in Category %}
-                                    <div class="text-break"><a> A</a></div>
+                                    <div class="text-break"><a> A/</a></div>
                                 {% endfor %}
                             </div>
 

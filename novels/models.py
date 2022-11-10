@@ -3,6 +3,8 @@ from django.db import models
 from django.utils import timezone
 from categories.models import Category
 from django_resized import ResizedImageField
+
+
 class Novel(models.Model):
     STATUSES = (
         ('Ongoing', 'Ongoing'),
